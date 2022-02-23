@@ -22,9 +22,10 @@ const mensageController = {
           });
         }
       
-        const number = req.body.number;
+        const number = req.body.number + '@c.us';
         const message = req.body.message;
-          await global.cliente
+
+         await global.cliente
         .sendText(number, message)
         .then((result) => {
           res.status(200).json({
@@ -45,12 +46,13 @@ const mensageController = {
       
     },
     enviarArquivo: async(req,res)=>{
-        const number = req.body.number;
+        const number = req.body.number + '@c.us';
         const doc = req.body.file;
+        const ext = req.body.ext;
         await global.cliente
         .sendFile(
           number,
-          global.url + '/' + 'docs/' + doc +'.xlsx',
+          global.url + '/' + 'docs/' + doc + '.'+ ext,
           'documento_'+doc,
           'mensagem da api com documento'
         )
