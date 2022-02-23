@@ -1,5 +1,6 @@
 
 const {body , validationResult} = require('express-validator')
+const path = require('path');
 
 
 const mensageController = {
@@ -8,7 +9,6 @@ const mensageController = {
         return res.status(200);
     },
     enviar: async (req,res) =>{
-        console.log(req.body);
         const errors = validationResult(req).formatWith(({
           msg
         }) =>{
@@ -43,7 +43,24 @@ const mensageController = {
           console.error('Error when sending: ', erro); //return object error
         });
       
-      }
+    },
+    enviarArquivo: async(req,res)=>{
+        const number = req.body.number;
+        const doc = req.body.file;
+        await global.cliente
+        .sendFile(
+          number,
+          global.url + '/' + 'docs/' + doc +'.xlsx',
+          'documento_'+doc,
+          'mensagem da api com documento'
+        )
+        .then((result) => {
+          console.log('Result: ', result); //return object success
+        })
+        .catch((erro) => {
+          console.error('Error when sending: ', erro); //return object error
+        });
+    }
     
 };
 module.exports = mensageController;

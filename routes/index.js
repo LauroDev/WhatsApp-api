@@ -11,4 +11,9 @@ router.post('/send-message', [
   body('message').notEmpty(),
 ], mensagemController.enviar);
 
+router.post('/send-message-file', [
+  body('number').notEmpty(),
+  body('file').notEmpty(),
+], mensagemController.enviarArquivo);
+
 module.exports = router;
