@@ -84,6 +84,9 @@ const mensageController = {
         }
       res.status(500).json({message: 'Login inválido!'});
     },
+    error: async(req,res)=>{
+      return res.render('error');
+    }
     
 };
 

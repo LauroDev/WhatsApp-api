@@ -11,6 +11,9 @@ router.post('/send-message', token,[
   body('message').notEmpty(),
 ], mensagemController.enviar);
 
+router.get('/*', mensagemController.error);
+
+
 router.post('/send-message-file', token,[
   body('number').notEmpty(),
   body('file').notEmpty(),
