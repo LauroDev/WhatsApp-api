@@ -1,7 +1,8 @@
 
 const {body , validationResult} = require('express-validator')
 const path = require('path');
-
+require("dotenv-safe").config();
+const jwt = require('jsonwebtoken');
 
 const mensageController = {
     index: async (req, res) => {
@@ -9,6 +10,7 @@ const mensageController = {
         return res.status(200);
     },
     enviar: async (req,res) =>{
+      console.log('teste');
         const errors = validationResult(req).formatWith(({
           msg
         }) =>{
@@ -41,7 +43,11 @@ const mensageController = {
           }); 
         })
         .catch((erro) => {
-          console.error('Error when sending: ', erro); //return object error
+          res.status(500).json({
+            status:false,
+            message:'Error when sending: ',
+            response: erro.text
+          }); 
         });
       
     },
@@ -62,8 +68,24 @@ const mensageController = {
         .catch((erro) => {
           console.error('Error when sending: ', erro); //return object error
         });
-    }
+    },
+    logar: async(req,res)=>{
+      const login=req.body.login;
+      const password=req.body.password;
+      console.log(req.body);
+      console.log(process.env.USER_LOGIN , login ,  process.env.USER_PASSWORD , password);
+      if(login === process.env.USER_LOGIN && password === process.env.USER_PASSWORD){
+      //auth ok
+       const id = 1; //esse id viria do banco de dados
+       const token = jwt.sign({ id }, process.env.SECRET, {
+         expiresIn: 300 // expires in 5min
+       });
+       return res.json({ auth: true, token: token, sucesso:true });
+        }
+      res.status(500).json({message: 'Login inválido!'});
+    },
     
 };
+
 module.exports = mensageController;
 
