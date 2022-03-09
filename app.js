@@ -21,7 +21,7 @@ global.url = path.resolve(path.join(__dirname, 'public'));
 
 venom
 .create({
-    session: '01x', //name of session
+    session: 'sice', //name of session
     multidevice: true // for version not multidevice use false.(default: true)
 })
 .then((client) => start(client))
