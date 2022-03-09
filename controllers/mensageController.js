@@ -10,7 +10,6 @@ const mensageController = {
         return res.status(200);
     },
     enviar: async (req,res) =>{
-      console.log('teste');
         const errors = validationResult(req).formatWith(({
           msg
         }) =>{
