@@ -3,6 +3,7 @@ const {body , validationResult} = require('express-validator')
 const path = require('path');
 require("dotenv-safe").config();
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
 const mensageController = {
     index: async (req, res) => {
@@ -88,10 +89,23 @@ const mensageController = {
     },
     envio: async(mensagem)=>{
       const number = mensagem.from;
-      const message = '🤖 Este número não recebe mensagens. Caso tenha dúvidas sobre seu processo entre diretamente em contato com o gestor.';
+      var numberFormated = (mensagem.chat.contact.displayName.substring(3)).replace('-','');
+      numberFormated = numberFormated.replace(/\s/g , '');
+      numberFormated = numberFormated.replace(' ' , '');
+      var mensagem='';
+      await axios.get('http://sicoex.dev.br/verificar_bloqueio/' + numberFormated.trim()).then(res =>{
+        if(res.data){
+          mensagem = '🤖 CASO QUEIRA VOLTAR A RECEBER MENSAGENS CLIQUE NESSE LINK http://sicoex.dev.br/desbloquear_numero/' +  numberFormated;
+        }else{
+          mensagem = '🤖 Este número não recebe mensagens. Caso tenha dúvidas sobre seu processo entre diretamente em contato com o gestor.';
+        }
+        
+      }).catch(error => {
+        console.error('error');
+      });
 
        await global.cliente
-      .sendText(number, message)
+      .sendText(number,  mensagem)
       .then((result) => {
         console.log(result);
       }).catch(err =>{
