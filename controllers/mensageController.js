@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 const mensageController = {
     index: async (req, res) => {
-        console.log(req.body);
+        // console.log(req.body);
         return res.status(200);
     },
     enviar: async (req,res) =>{
