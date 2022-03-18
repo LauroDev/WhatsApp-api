@@ -93,9 +93,9 @@ const mensageController = {
       numberFormated = numberFormated.replace(/\s/g , '');
       numberFormated = numberFormated.replace(' ' , '');
       var mensagem='';
-      await axios.get('http://sicoex.dev.br/verificar_bloqueio/' + numberFormated.trim()).then(res =>{
+      await axios.get('http://sicoex.01x.com.br/verificar_bloqueio/' + numberFormated.trim()).then(res =>{
         if(res.data){
-          mensagem = '🤖 CASO QUEIRA VOLTAR A RECEBER MENSAGENS CLIQUE NESSE LINK http://sicoex.dev.br/desbloquear_numero/' +  numberFormated;
+          mensagem = '🤖 CASO QUEIRA VOLTAR A RECEBER MENSAGENS CLIQUE NESSE LINK http://sicoex.01x.com.br/desbloquear_numero/' +  numberFormated;
         }else{
           mensagem = '🤖 Este número não recebe mensagens. Caso tenha dúvidas sobre seu processo entre diretamente em contato com o gestor.';
         }
