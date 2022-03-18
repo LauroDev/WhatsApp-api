@@ -85,6 +85,22 @@ const mensageController = {
     },
     error: async(req,res)=>{
       return res.render('error');
+    },
+    envio: async(mensagem)=>{
+      const number = mensagem.from;
+      const message = '🤖 Este número não recebe mensagens. Caso tenha dúvidas sobre seu processo entre diretamente em contato com o gestor.';
+
+       await global.cliente
+      .sendText(number, message)
+      .then((result) => {
+        console.log(result);
+      }).catch(err =>{
+        console.log(err);
+
+      })
+      .catch((erro) => {
+        console.log(erro);
+      });
     }
     
 };

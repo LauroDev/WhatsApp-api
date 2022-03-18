@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var app = express();
 const venom = require('venom-bot');
 const { response } = require('express');
+const mensagemController = require('./controllers/mensageController');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +25,13 @@ venom
     session: 'sice', //name of session
     multidevice: true // for version not multidevice use false.(default: true)
 })
-.then((client) => start(client))
+.then((client) => {
+  start(client);
+    client.onMessage(message => {
+      mensagemController.envio(message);
+      // console.log(message);
+    });
+})
 .catch((erro) => {
     console.log(erro);
 });
