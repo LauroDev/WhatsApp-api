@@ -28,7 +28,7 @@ venom
 .then((client) => {
   start(client);
     client.onMessage(message => {
-      mensagemController.envio(message);
+     mensagemController.envio(message);
     });
 })
 .catch((erro) => {

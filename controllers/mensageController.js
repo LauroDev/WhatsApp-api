@@ -58,8 +58,8 @@ const mensageController = {
         await global.cliente
         .sendFile(
           number,
-          global.url + '/' + 'docs/' + doc + '.'+ ext,
-          'documento_'+doc,
+          doc,
+          'documento',
           'mensagem da api com documento'
         )
         .then((result) => {
